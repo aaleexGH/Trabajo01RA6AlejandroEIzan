@@ -1,5 +1,5 @@
 package repository;
 
-public class LibroRepository {
+public interface LibroRepository {
 
 }
