@@ -56,6 +56,21 @@ public class Libro {
 	public void setStock(int stock) {
 		this.stock = stock;
 	}
+	
+    public String toCSV() {
+        return id + "^" + titulo + "^" + autor + "^" + precio + "^" + stock;
+    }
+
+    public static Libro fromCSV(String linea) {
+        String[] partes = linea.split("\\^");
+        return new Libro(
+            partes[0], 
+            partes[1], 
+            partes[2], 
+            Double.parseDouble(partes[3]), 
+            Integer.parseInt(partes[4])
+        );
+    }
 
 	@Override
 	public String toString() {
