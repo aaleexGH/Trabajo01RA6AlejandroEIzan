@@ -38,6 +38,13 @@ public class MySQLLibroRepository implements LibroRepository {
         );
     }
 
+    /**
+     * Obtiene todos los registros de la tabla leyendo directamente la base de datos.
+     * Ejecuta la consulta {@code SELECT * FROM libros} sin filtros.
+     * 
+     * @return una lista con todos los libros encontrados, o una lista vacía si ocurre una excepción
+     */
+    
     @Override
     public List<Libro> findAll() {
         List<Libro> libros = new ArrayList<>();
@@ -56,6 +63,14 @@ public class MySQLLibroRepository implements LibroRepository {
         return libros;
     }
 
+    /**
+     * Busca registros que contengan el título especificado, ignorando mayúsculas y minúsculas.
+     * Utiliza la cláusula SQL {@code LIKE} junto con comodines a ambos lados del texto.
+     * 
+     * @param titulo el fragmento de texto a buscar dentro de los títulos
+     * @return la lista de libros cuyo título coincide parcialmente con el parámetro
+     */
+    
     @Override
     public List<Libro> findByTitulo(String titulo) {
         List<Libro> libros = new ArrayList<>();
@@ -76,6 +91,14 @@ public class MySQLLibroRepository implements LibroRepository {
         return libros;
     }
 
+    /**
+     * Busca registros por el nombre del autor aplicando insensibilidad a mayúsculas y minúsculas.
+     * Utiliza la cláusula SQL {@code LIKE}.
+     * 
+     * @param autor el nombre o fragmento del nombre del autor a localizar
+     * @return una lista de libros asociados a ese autor
+     */
+    
     @Override
     public List<Libro> findByAutor(String autor) {
         List<Libro> libros = new ArrayList<>();
