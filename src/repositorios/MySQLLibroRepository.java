@@ -25,7 +25,7 @@ public class MySQLLibroRepository implements LibroRepository {
      * 
      * @param rs el conjunto de resultados posicionado en la fila a mapear
      * @return un objeto {@link Libro} con los atributos extraídos de la base de datos
-     * @throws SQLException si ocurre un error al acceder a las columnas o extraer sus tipos de datos
+     * @throws SQLException si ocurre un error al acceder a las columnas o extraer sus tipos de datos 
      */
 	
     private Libro mapResultSetToLibro(ResultSet rs) throws SQLException {
