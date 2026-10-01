@@ -6,8 +6,28 @@ import java.util.List;
 
 import modelo.Libro;
 
+/**
+ * Implementación de la interfaz {@link LibroRepository} para la gestión de 
+ * persistencia en una base de datos MySQL.
+ * <p>
+ * Gestiona las conexiones de forma independiente en cada método mediante 
+ * bloques try-with-resources y previene la inyección SQL utilizando 
+ * sentencias preparadas.
+ * 
+ * @author Alejandro e Izan
+ */
+
 public class MySQLLibroRepository implements LibroRepository {
 
+	/**
+     * Mapea los datos de la fila actual de un objeto {@link ResultSet} instanciando 
+     * un nuevo objeto {@link Libro}.
+     * 
+     * @param rs el conjunto de resultados posicionado en la fila a mapear
+     * @return un objeto {@link Libro} con los atributos extraídos de la base de datos
+     * @throws SQLException si ocurre un error al acceder a las columnas o extraer sus tipos de datos
+     */
+	
     private Libro mapResultSetToLibro(ResultSet rs) throws SQLException {
         return new Libro(
             rs.getString("id"),
@@ -117,6 +137,13 @@ public class MySQLLibroRepository implements LibroRepository {
         return libros;
     }
 
+    /**
+     * Inserta un nuevo registro en la tabla de la base de datos mapeando los atributos del objeto.
+     * Utiliza los parámetros de una sentencia preparada para almacenar id, título, autor, precio y stock.
+     * 
+     * @param libro el objeto de modelo con los datos a insertar
+     */
+    
     @Override
     public void insertar(Libro libro) {
         String sql = "INSERT INTO libros (id, titulo, autor, precio, stock) VALUES (?, ?, ?, ?, ?)";
@@ -135,6 +162,13 @@ public class MySQLLibroRepository implements LibroRepository {
         }
     }
 
+    /**
+     * Elimina el registro correspondiente a la base de datos buscando por el identificador único.
+     * Ejecuta una sentencia {@code DELETE FROM} directa.
+     * 
+     * @param id el identificador único asociado al libro que se desea eliminar
+     */
+    
     @Override
     public void eliminarPorId(String id) {
         String sql = "DELETE FROM libros WHERE id = ?";
@@ -148,6 +182,14 @@ public class MySQLLibroRepository implements LibroRepository {
         }
     }
 
+    /**
+     * Reemplaza todos los datos actuales de la tabla por los de la lista proporcionada.
+     * Realiza un vaciado total previo de la tabla ejecutando una consulta de borrado,
+     * para luego iterar y registrar cada objeto mediante el método {@link #insertar(Libro)}.
+     * 
+     * @param libros la lista completa que conformará el nuevo estado de la base de datos
+     */
+    
     @Override
     public void guardarTodos(List<Libro> libros) {
         String sqlDelete = "DELETE FROM libros";

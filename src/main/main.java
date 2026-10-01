@@ -12,7 +12,6 @@ public class main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         
-        
         LibroRepository repoArchivo = new FileLibroRepository();
         LibroRepository repoMySQL = new MySQLLibroRepository();
         
