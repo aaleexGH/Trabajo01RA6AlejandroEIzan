@@ -119,6 +119,15 @@ public class MySQLLibroRepository implements LibroRepository {
         return libros;
     }
 
+    /**
+     * Filtra los libros existentes en la base de datos cuyo precio se encuentre dentro del rango indicado.
+     * Ambos valores, mínimo y máximo, se incluyen en la condición de búsqueda.
+     * 
+     * @param min el precio mínimo aceptado
+     * @param max el precio máximo aceptado
+     * @return una lista de libros que cumplen con el criterio de precio
+     */
+    
     @Override
     public List<Libro> findByRangoPrecio(double min, double max) {
         List<Libro> libros = new ArrayList<>();
@@ -140,6 +149,13 @@ public class MySQLLibroRepository implements LibroRepository {
         return libros;
     }
 
+    /**
+     * Recupera todos los registros cuyo inventario es igual o superior al umbral requerido.
+     * 
+     * @param stockMinimo la cantidad mínima requerida en inventario
+     * @return la lista de libros que tienen suficiente stock
+     */
+    
     @Override
     public List<Libro> findByStockMinimo(int stockMinimo) {
         List<Libro> libros = new ArrayList<>();
