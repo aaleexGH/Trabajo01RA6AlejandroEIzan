@@ -106,6 +106,14 @@ public class FileLibroRepository implements LibroRepository{
 	                .collect(Collectors.toList());
 	    }
 
+	    /**
+	     * Abre el archivo en modo de adición (append) y escribe la representación 
+	     * delimitada por separadores del nuevo registro al final del documento, 
+	     * añadiendo un salto de línea tras la inserción.
+	     * 
+	     * @param libro el objeto que contiene la información a añadir al archivo
+	     */
+	    
 	    @Override
 	    public void insertar(Libro libro) {
 	        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo, true))) {
@@ -116,6 +124,14 @@ public class FileLibroRepository implements LibroRepository{
 	        }
 	    }
 
+	    /**
+	     * Realiza un borrado físico de un registro. Para ello, extrae todo el listado, 
+	     * descarta mediante {@code filter()} el elemento que coincide con el parámetro 
+	     * exacto y, posteriormente, sobrescribe todo el archivo con la lista resultante.
+	     * 
+	     * @param id el identificador alfanumérico exacto del libro que se desea eliminar
+	     */
+	    
 	    @Override
 	    public void eliminarPorId(String id) {
 	        List<Libro> libros = findAll().stream()
@@ -124,6 +140,14 @@ public class FileLibroRepository implements LibroRepository{
 	        guardarTodos(libros);
 	    }
 
+	    /**
+	     * Reemplaza por completo el contenido del archivo de texto.
+	     * Itera la colección proporcionada y vuelca, línea por línea, 
+	     * los objetos de la memoria al formato delimitado del fichero subyacente.
+	     * 
+	     * @param libros la colección íntegra que conformará el nuevo estado del documento
+	     */
+	    
 	    @Override
 	    public void guardarTodos(List<Libro> libros) {
 	        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
