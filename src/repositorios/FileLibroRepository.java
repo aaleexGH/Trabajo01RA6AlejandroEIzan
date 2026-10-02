@@ -4,10 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import modelo.Libro;
+
+/**
+ * Implementación de la interfaz {@link LibroRepository} para el almacenamiento 
+ * y recuperación de datos persistentes en un archivo de texto plano.
+ * <p>
+ * Utiliza las clases {@link BufferedReader} y {@link BufferedWriter} para 
+ * gestionar la entrada y salida, apoyándose en la API de Streams de Java 
+ * para realizar los filtrados de datos cargados en memoria.
+ * 
+ * @author Alejandro e Izan
+ */
+
 public class FileLibroRepository implements LibroRepository{
 	
 	    private final String archivo = "libros.txt";
 
+	    /**
+	     * Lee el archivo completo línea por línea utilizando un bloque try-with-resources.
+	     * Transforma cada línea de texto leída en un objeto instanciado utilizando 
+	     * el método {@code Libro.fromCSV()}.
+	     * 
+	     * @return una lista con todos los libros extraídos del archivo, o una lista 
+	     *         vacía si el archivo no existe o no se pudo leer
+	     */
+	    
 	    @Override
 	    public List<Libro> findAll() {
 	        List<Libro> libros = new ArrayList<>();
@@ -23,6 +44,15 @@ public class FileLibroRepository implements LibroRepository{
 	        return libros;
 	    }
 
+	    /**
+	     * Carga todos los registros a memoria y emplea {@code stream().filter()} para 
+	     * retener únicamente aquellos cuyo título contiene la cadena buscada, sin 
+	     * distinguir entre letras mayúsculas o minúsculas.
+	     * 
+	     * @param titulo el texto que se desea buscar dentro de los títulos
+	     * @return una lista de libros que coinciden parcialmente con la búsqueda
+	     */
+	    
 	    @Override
 	    public List<Libro> findByTitulo(String titulo) {
 	        return findAll().stream()
