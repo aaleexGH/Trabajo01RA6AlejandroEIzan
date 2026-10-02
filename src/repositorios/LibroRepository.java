@@ -32,9 +32,35 @@ public interface LibroRepository {
      * @return la lista de libros que cumplen con el criterio de búsqueda
      */
     List<Libro> findByTitulo(String titulo);
+    
+    /**
+     * Filtra el repositorio para encontrar las obras asociadas a un escritor en particular.
+     * 
+     * @param autor el nombre o parte del nombre del autor que se desea consultar
+     * @return una colección de libros vinculados al autor introducido
+     */
     List<Libro> findByAutor(String autor);
+    
+    /**
+     * Busca los libros que tengan un precio de venta comprendido entre dos límites.
+     * Se asume que ambos valores, mínimo y máximo, están incluidos en la comprobación.
+     * 
+     * @param min el importe mínimo aceptable
+     * @param max el importe máximo aceptable
+     * @return la lista de libros que encajan dentro del rango económico solicitado
+     */
     List<Libro> findByRangoPrecio(double min, double max);
+    
+    /**
+     * Obtiene los libros que cuentan con una cantidad de unidades disponibles en 
+     * inventario igual o superior a la cifra solicitada.
+     * 
+     * @param stockMinimo la cantidad mínima de ejemplares requerida en el almacén
+     * @return una lista con los libros que disponen del stock suficiente
+     */
     List<Libro> findByStockMinimo(int stockMinimo);
+    
+    
     void insertar(Libro libro);    
     void eliminarPorId(String id);
     void guardarTodos(List<Libro> libros);
