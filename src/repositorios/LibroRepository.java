@@ -60,8 +60,26 @@ public interface LibroRepository {
      */
     List<Libro> findByStockMinimo(int stockMinimo);
     
+    /**
+     * Registra un nuevo libro en el sistema de almacenamiento.
+     * 
+     * @param libro el objeto de modelo con los datos del nuevo ejemplar a guardar
+     */
+    void insertar(Libro libro);   
     
-    void insertar(Libro libro);    
+    /**
+     * Suprime de forma definitiva un libro del almacén basándose en su código identificador.
+     * 
+     * @param id el identificador alfanumérico único asociado al libro que se va a eliminar
+     */
     void eliminarPorId(String id);
+    
+    /**
+     * Vuelca una colección completa de libros al sistema de persistencia.
+     * Se utiliza principalmente para reemplazar los datos actuales o para procesos 
+     * de volcado masivo al copiar información entre diferentes tipos de repositorios.
+     * 
+     * @param libros la lista completa de objetos que formarán el nuevo estado de los datos
+     */
     void guardarTodos(List<Libro> libros);
 }
