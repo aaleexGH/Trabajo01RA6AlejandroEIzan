@@ -60,6 +60,14 @@ public class FileLibroRepository implements LibroRepository{
 	                .collect(Collectors.toList());
 	    }
 
+	    /**
+	     * Obtiene el catálogo completo y filtra mediante un flujo de datos las obras 
+	     * cuyo autor incluye la secuencia indicada, ignorando la capitalización del texto.
+	     * 
+	     * @param autor el nombre o fragmento del nombre del escritor a localizar
+	     * @return una colección con los libros que corresponden a dicho autor
+	     */
+	    
 	    @Override
 	    public List<Libro> findByAutor(String autor) {
 	        return findAll().stream()
@@ -67,6 +75,15 @@ public class FileLibroRepository implements LibroRepository{
 	                .collect(Collectors.toList());
 	    }
 
+	    /**
+	     * Recupera la información del archivo y filtra con {@code stream()} los resultados 
+	     * comprobando que el precio se sitúe entre los límites definidos (ambos incluidos).
+	     * 
+	     * @param min el valor económico mínimo permitido
+	     * @param max el valor económico máximo permitido
+	     * @return la lista de libros encuadrados dentro del margen de precios solicitado
+	     */
+	    
 	    @Override
 	    public List<Libro> findByRangoPrecio(double min, double max) {
 	        return findAll().stream()
@@ -74,6 +91,14 @@ public class FileLibroRepository implements LibroRepository{
 	                .collect(Collectors.toList());
 	    }
 
+	    /**
+	     * Filtra la colección de libros en memoria reteniendo solo los ejemplares 
+	     * cuyo inventario disponible alcanza o supera el umbral establecido.
+	     * 
+	     * @param stockMinimo la cantidad mínima en almacén requerida
+	     * @return una lista de libros con existencias suficientes
+	     */
+	    
 	    @Override
 	    public List<Libro> findByStockMinimo(int stockMinimo) {
 	        return findAll().stream()
