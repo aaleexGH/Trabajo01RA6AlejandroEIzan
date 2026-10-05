@@ -1,13 +1,45 @@
 package modelo;
 
+/**
+ * Define la clase libro dentro del paquete modelo, 
+ * permitiendo gestionar la informacion basica de libro.
+ * 
+ * @author Alejandro e Izan
+ */
+
 public class Libro {
 
+	/**
+	 * Identificador unico del libro
+	 */
 	private String id;
+	/**
+	 * titulo del libro
+	 */
     private String titulo;
+    /**
+	 * autor del libro
+	 */
     private String autor;
+    /**
+	 * precio del libro
+	 */
     private double precio;
+    /**
+	 * cantidad de unidades del libro
+	 */
     private int stock;
     
+    
+    
+	/**
+	 * Constructor para instanciar un nuevo libro
+	 * @param id identificador unico del libro
+	 * @param titulo titulo del libro
+	 * @param autor autor del libro
+	 * @param precio precio del libro
+	 * @param stock unidades disponibles del libro
+	 */
 	public Libro(String id, String titulo, String autor, double precio, int stock) {
 		super();
 		this.id = id;
@@ -17,6 +49,10 @@ public class Libro {
 		this.stock = stock;
 	}
 
+	/**
+	 * Obtiene el indentificador del libro
+	 * @return identificador del libro
+	 */
 	public String getId() {
 		return id;
 	}
