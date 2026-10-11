@@ -1004,3 +1004,43 @@ ORDER BY l.titulo, la.rol, autor;
 | La sombra del viento | Carlos Ruiz Zafón | PRINCIPAL |
 
 ---
+
+# Apartado 11. Limitaciones y mejoras futuras
+
+## 11.1. Gestión de reservas
+
+El modelo registra préstamos, pero no una lista de espera o reservas de libros.
+
+**Mejora futura:** crear una tabla `reserva` con lector, libro, fecha de solicitud y estado.
+
+## 11.2. Historial de ubicaciones
+
+El ejemplar guarda su sección actual, pero no los cambios de ubicación.
+
+**Mejora futura:** registrar un historial de movimientos entre secciones.
+
+## 11.3. Sanciones y retrasos
+
+El modelo permite detectar préstamos vencidos, pero no registra sanciones ni incidencias.
+
+**Mejora futura:** crear una tabla para incidencias o sanciones, si las normas aplicables lo requieren.
+
+## 11.4. Más tipos de documentos
+
+El caso se centra en libros y ejemplares físicos.
+
+**Mejora futura:** ampliar el catálogo para incluir revistas, documentos audiovisuales u otros materiales.
+
+## 11.5. Control de ejemplares prestados
+
+La estructura registra el estado del ejemplar y el historial de préstamos. Para impedir que se asigne una misma copia a dos préstamos activos al mismo tiempo, la aplicación deberá validar la disponibilidad dentro de una operación segura antes de confirmar el préstamo.
+
+**Mejora futura:** implementar una transacción de base de datos que compruebe y actualice el estado del ejemplar junto con el alta del préstamo.
+
+---
+
+# Conclusión
+
+La base de datos propuesta permite organizar el catálogo bibliográfico y controlar cada ejemplar físico, sus autores, editorial, ubicación y préstamos. Las claves primarias y foráneas mantienen las relaciones entre las tablas, mientras que las consultas permiten comprobar la disponibilidad, localizar préstamos vencidos y analizar el uso del catálogo.
+
+El caso, las decisiones y los datos de prueba son ficticios y están diseñados para fines académicos. No representan los registros ni las normas internas reales de la Biblioteca de Aragón o de la Biblioteca Pública del Estado en Zaragoza.
