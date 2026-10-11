@@ -482,3 +482,96 @@ CREATE TABLE detalle_prestamo (
 ```
 
 ---
+
+# Apartado 7. Diccionario de datos
+
+## 7.1. Tabla `editorial`
+
+| Columna | Tipo | Obligatorio | Descripción |
+|---|---|:---:|---|
+| `id` | INT | Sí | Identificador de la editorial. |
+| `nombre` | VARCHAR(120) | Sí | Nombre de la editorial; no se repite. |
+| `pais` | VARCHAR(80) | Sí | País de la editorial. |
+| `telefono` | VARCHAR(25) | No | Teléfono de contacto. |
+
+## 7.2. Tabla `autor`
+
+| Columna | Tipo | Obligatorio | Descripción |
+|---|---|:---:|---|
+| `id` | INT | Sí | Identificador del autor. |
+| `nombre` | VARCHAR(60) | Sí | Nombre del autor. |
+| `apellidos` | VARCHAR(100) | Sí | Apellidos del autor. |
+| `nacionalidad` | VARCHAR(60) | No | Nacionalidad del autor. |
+| `anio_nacimiento` | SMALLINT | No | Año de nacimiento, si se conoce. |
+
+## 7.3. Tabla `libro`
+
+| Columna | Tipo | Obligatorio | Descripción |
+|---|---|:---:|---|
+| `id` | INT | Sí | Identificador interno del libro. |
+| `codigo_catalogo` | VARCHAR(20) | Sí | Código interno único utilizado para localizar la ficha bibliográfica. |
+| `titulo` | VARCHAR(180) | Sí | Título de la obra. |
+| `anio_publicacion` | SMALLINT | No | Año de publicación de la edición catalogada. |
+| `num_paginas` | INT | No | Número de páginas de la edición. |
+| `editorial_id` | INT | Sí | Editorial responsable de la edición; referencia a `editorial.id`. |
+
+## 7.4. Tabla `libro_autor`
+
+| Columna | Tipo | Obligatorio | Descripción |
+|---|---|:---:|---|
+| `libro_id` | INT | Sí | Libro relacionado; forma parte de la clave primaria. |
+| `autor_id` | INT | Sí | Autor relacionado; forma parte de la clave primaria. |
+| `rol` | ENUM | Sí | Indica si es autor principal o colaborador. |
+
+## 7.5. Tabla `ejemplar`
+
+| Columna | Tipo | Obligatorio | Descripción |
+|---|---|:---:|---|
+| `id` | INT | Sí | Identificador de la copia física. |
+| `libro_id` | INT | Sí | Libro al que pertenece el ejemplar. |
+| `codigo_barras` | VARCHAR(30) | Sí | Código único impreso o asociado al ejemplar. |
+| `seccion` | VARCHAR(60) | Sí | Sección o ubicación, por ejemplo Adultos o Infantil. |
+| `estado` | ENUM | Sí | Estado actual del ejemplar. |
+
+## 7.6. Tabla `lector`
+
+| Columna | Tipo | Obligatorio | Descripción |
+|---|---|:---:|---|
+| `id` | INT | Sí | Identificador del lector. |
+| `nombre` | VARCHAR(60) | Sí | Nombre del lector. |
+| `apellidos` | VARCHAR(100) | Sí | Apellidos del lector. |
+| `email` | VARCHAR(150) | Sí | Correo único de contacto. |
+| `telefono` | VARCHAR(20) | No | Teléfono de contacto. |
+| `fecha_alta` | DATE | Sí | Fecha de registro. |
+
+## 7.7. Tabla `empleado`
+
+| Columna | Tipo | Obligatorio | Descripción |
+|---|---|:---:|---|
+| `dni` | VARCHAR(12) | Sí | Identificador del empleado. |
+| `nombre` | VARCHAR(60) | Sí | Nombre del empleado. |
+| `apellidos` | VARCHAR(100) | Sí | Apellidos del empleado. |
+| `puesto` | VARCHAR(60) | Sí | Puesto de trabajo. |
+| `email` | VARCHAR(150) | Sí | Correo electrónico único. |
+
+## 7.8. Tabla `prestamo`
+
+| Columna | Tipo | Obligatorio | Descripción |
+|---|---|:---:|---|
+| `id` | INT | Sí | Identificador del préstamo. |
+| `fecha_prestamo` | DATE | Sí | Fecha en que se registra el préstamo. |
+| `fecha_devolucion_prevista` | DATE | Sí | Fecha prevista para devolver los ejemplares. |
+| `lector_id` | INT | Sí | Lector responsable del préstamo. |
+| `empleado_dni` | VARCHAR(12) | Sí | Empleado que registra la operación. |
+| `estado` | ENUM | Sí | Estado general del préstamo. |
+
+## 7.9. Tabla `detalle_prestamo`
+
+| Columna | Tipo | Obligatorio | Descripción |
+|---|---|:---:|---|
+| `id` | INT | Sí | Identificador de la línea de detalle. |
+| `prestamo_id` | INT | Sí | Préstamo al que pertenece. |
+| `ejemplar_id` | INT | Sí | Ejemplar físico prestado. |
+| `fecha_devolucion_real` | DATE | No | Fecha en que se devolvió el ejemplar; queda vacía mientras esté prestado. |
+
+---
