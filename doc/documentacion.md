@@ -291,3 +291,98 @@ El diagrama debe representar las nueve tablas del modelo, sus atributos, claves 
 | `ejemplar` - `detalle_prestamo` | 1:N histórico | `detalle_prestamo.ejemplar_id` |
 
 ---
+
+# Apartado 5. Modelo lógico
+
+## 5.1. Tabla `editorial`
+
+| Columna | Clave | Referencia |
+|---|---|---|
+| `id` | PK | |
+| `nombre` | UNIQUE | |
+| `pais` | | |
+| `telefono` | | |
+
+## 5.2. Tabla `autor`
+
+| Columna | Clave | Referencia |
+|---|---|---|
+| `id` | PK | |
+| `nombre` | | |
+| `apellidos` | | |
+| `nacionalidad` | | |
+| `anio_nacimiento` | | |
+
+## 5.3. Tabla `libro`
+
+| Columna | Clave | Referencia |
+|---|---|---|
+| `id` | PK | |
+| `codigo_catalogo` | UNIQUE | |
+| `titulo` | | |
+| `anio_publicacion` | | |
+| `num_paginas` | | |
+| `editorial_id` | FK | `editorial.id` |
+
+## 5.4. Tabla `libro_autor`
+
+| Columna | Clave | Referencia |
+|---|---|---|
+| `libro_id` | PK, FK | `libro.id` |
+| `autor_id` | PK, FK | `autor.id` |
+| `rol` | | |
+
+La clave primaria está formada por la combinación de `libro_id` y `autor_id`.
+
+## 5.5. Tabla `ejemplar`
+
+| Columna | Clave | Referencia |
+|---|---|---|
+| `id` | PK | |
+| `libro_id` | FK | `libro.id` |
+| `codigo_barras` | UNIQUE | |
+| `seccion` | | |
+| `estado` | | |
+
+## 5.6. Tabla `lector`
+
+| Columna | Clave | Referencia |
+|---|---|---|
+| `id` | PK | |
+| `nombre` | | |
+| `apellidos` | | |
+| `email` | UNIQUE | |
+| `telefono` | | |
+| `fecha_alta` | | |
+
+## 5.7. Tabla `empleado`
+
+| Columna | Clave | Referencia |
+|---|---|---|
+| `dni` | PK | |
+| `nombre` | | |
+| `apellidos` | | |
+| `puesto` | | |
+| `email` | UNIQUE | |
+
+## 5.8. Tabla `prestamo`
+
+| Columna | Clave | Referencia |
+|---|---|---|
+| `id` | PK | |
+| `fecha_prestamo` | | |
+| `fecha_devolucion_prevista` | | |
+| `lector_id` | FK | `lector.id` |
+| `empleado_dni` | FK | `empleado.dni` |
+| `estado` | | |
+
+## 5.9. Tabla `detalle_prestamo`
+
+| Columna | Clave | Referencia |
+|---|---|---|
+| `id` | PK | |
+| `prestamo_id` | FK | `prestamo.id` |
+| `ejemplar_id` | FK | `ejemplar.id` |
+| `fecha_devolucion_real` | | |
+
+---
