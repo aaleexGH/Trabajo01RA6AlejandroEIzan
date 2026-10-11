@@ -170,3 +170,34 @@ Los estados del modelo son `ACTIVO`, `DEVUELTO` y `CANCELADO`. La duración de l
 | 1006 | 2026-10-09 | 2026-11-06 | Elena Ruiz | Carlos Pérez Sanz | ACTIVO |
 
 Un préstamo puede contener varios ejemplares, por lo que se necesita un detalle de préstamo.
+
+## 8. El detalle de préstamo
+
+Cada línea del detalle relaciona un préstamo con un ejemplar concreto. También permite guardar la fecha en la que se devolvió realmente ese ejemplar.
+
+### Ejemplo de detalle
+
+| **ID** | **Préstamo** | **Ejemplar** | **Fecha de devolución real** |
+|---:|---:|---|---|
+| 1 | 1001 | BIB-0001 | — |
+| 2 | 1002 | BIB-0003 | — |
+| 3 | 1003 | BIB-0013 | 2026-09-20 |
+| 4 | 1004 | BIB-0005 | — |
+| 5 | 1005 | BIB-0007 | — |
+| 6 | 1006 | BIB-0011 | — |
+
+Una línea sin fecha de devolución real representa un ejemplar que todavía no se ha registrado como devuelto. El estado del ejemplar debe mantenerse coherente con sus préstamos activos.
+
+## 9. Lo que la biblioteca quiere poder consultar
+
+La base de datos debe ayudar a responder preguntas como estas:
+
+- ¿Qué libros forman parte del catálogo y quién los publicó?
+- ¿Qué autores participan en cada libro?
+- ¿Cuántos ejemplares hay de cada título y cuántos están disponibles?
+- ¿Qué préstamos siguen activos?
+- ¿Qué préstamos han superado la fecha prevista de devolución?
+- ¿Qué lector tiene más préstamos registrados?
+- ¿Qué libros se han prestado más veces?
+- ¿Qué empleado ha registrado más préstamos?
+- ¿Qué ejemplares corresponden a un préstamo determinado?
