@@ -575,3 +575,55 @@ CREATE TABLE detalle_prestamo (
 | `fecha_devolucion_real` | DATE | No | Fecha en que se devolvió el ejemplar; queda vacía mientras esté prestado. |
 
 ---
+
+# Apartado 8. Decisiones de diseño
+
+## 8.1. Separar libro y ejemplar
+
+**Decisión:** guardar el título en `libro` y cada copia física en `ejemplar`.
+
+**Motivo:** una misma obra puede tener varias copias y cada una puede encontrarse en un estado diferente.
+
+**Alternativa descartada:** guardar un campo `stock` en `libro`, porque no permitiría identificar qué copia concreta está prestada o disponible.
+
+## 8.2. Separar autores y libros
+
+**Decisión:** utilizar `autor` y una tabla intermedia `libro_autor`.
+
+**Motivo:** un libro puede tener varios autores y una persona puede participar en diferentes libros. La tabla intermedia también almacena el papel del autor.
+
+**Alternativa descartada:** guardar todos los nombres de los autores en una única columna de texto.
+
+## 8.3. Separar préstamo y detalle de préstamo
+
+**Decisión:** utilizar `prestamo` para la operación general y `detalle_prestamo` para cada ejemplar.
+
+**Motivo:** un lector puede llevarse varios ejemplares en una misma operación y devolverlos en fechas diferentes.
+
+**Alternativa descartada:** crear un préstamo distinto por cada ejemplar, perdiendo la agrupación de una misma operación.
+
+## 8.4. Conservar el historial de devoluciones
+
+**Decisión:** incluir `fecha_devolucion_real` en `detalle_prestamo`.
+
+**Motivo:** permite conocer cuándo se devolvió cada ejemplar y consultar el historial de los préstamos.
+
+**Alternativa descartada:** guardar solo el estado actual del ejemplar, sin conservar la fecha de devolución de operaciones anteriores.
+
+## 8.5. Calcular las unidades disponibles
+
+**Decisión:** obtener el número de copias disponibles contando los ejemplares con estado `DISPONIBLE`.
+
+**Motivo:** evita duplicar el mismo dato en una columna de stock que podría quedarse desactualizada.
+
+**Alternativa descartada:** guardar manualmente el número de copias disponibles dentro de `libro`.
+
+## 8.6. Utilizar claves foráneas
+
+**Decisión:** relacionar las tablas mediante claves foráneas.
+
+**Motivo:** garantiza que libros, editoriales, autores, lectores, empleados, ejemplares y préstamos se relacionen con registros existentes.
+
+**Alternativa descartada:** guardar identificadores sin comprobar su existencia en la tabla correspondiente.
+
+---
