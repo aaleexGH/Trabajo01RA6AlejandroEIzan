@@ -247,3 +247,47 @@ El catálogo describe cada obra y su editorial; la relación entre libros y auto
 | `ejemplar` - `detalle_prestamo` | 1:N a lo largo del tiempo | Un ejemplar puede aparecer en distintos préstamos históricos, pero no debe tener dos préstamos activos a la vez. |
 
 ---
+
+# Apartado 3. Reglas de negocio
+
+1. Cada libro tiene un identificador interno único y un código de catálogo no repetido.
+2. Cada libro está asociado a una editorial en este modelo.
+3. Una editorial puede estar asociada a muchos libros.
+4. Un libro puede tener varios autores y un autor puede participar en varios libros.
+5. La tabla `libro_autor` registra el papel de cada autor en la obra.
+6. Cada ejemplar físico tiene un código de barras único.
+7. Cada ejemplar corresponde a un único libro.
+8. El estado de un ejemplar debe ser `DISPONIBLE`, `PRESTADO`, `REPARACION` o `PERDIDO`.
+9. Cada lector tiene un identificador y un correo electrónico único.
+10. Cada préstamo corresponde a un único lector y a un único empleado.
+11. Un préstamo puede incluir uno o varios ejemplares mediante `detalle_prestamo`.
+12. Un ejemplar puede aparecer en varios préstamos a lo largo del tiempo, pero no puede tener dos préstamos activos simultáneamente.
+13. La fecha prevista de devolución no puede ser anterior a la fecha del préstamo.
+14. La fecha real de devolución puede quedar vacía mientras el ejemplar siga prestado.
+15. Cuando se devuelve un ejemplar, debe actualizarse su estado a `DISPONIBLE`, salvo que necesite reparación u otro tratamiento.
+16. El préstamo se considera `DEVUELTO` cuando todos sus ejemplares han sido devueltos.
+17. El catálogo y los datos de ejemplo son ficticios; las condiciones reales de préstamo deberán consultarse con la institución antes de desarrollar un sistema real.
+
+---
+
+# Apartado 4. Diagrama entidad-relación
+
+El diagrama debe representar las nueve tablas del modelo, sus atributos, claves primarias, claves foráneas y cardinalidades.
+
+## 4.1. Diagrama
+
+![Diagrama entidad-relación de la biblioteca](./Diagrama.png)
+
+## 4.2. Tabla de relaciones
+
+| Relación | Tipo | Cómo se resuelve |
+|---|---|---|
+| `editorial` - `libro` | 1:N | `libro.editorial_id` |
+| `libro` - `autor` | N:M | Tabla intermedia `libro_autor` |
+| `libro` - `ejemplar` | 1:N | `ejemplar.libro_id` |
+| `lector` - `prestamo` | 1:N | `prestamo.lector_id` |
+| `empleado` - `prestamo` | 1:N | `prestamo.empleado_dni` |
+| `prestamo` - `detalle_prestamo` | 1:N | `detalle_prestamo.prestamo_id` |
+| `ejemplar` - `detalle_prestamo` | 1:N histórico | `detalle_prestamo.ejemplar_id` |
+
+---
