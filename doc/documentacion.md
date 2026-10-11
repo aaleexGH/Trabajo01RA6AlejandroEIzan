@@ -627,3 +627,192 @@ CREATE TABLE detalle_prestamo (
 **Alternativa descartada:** guardar identificadores sin comprobar su existencia en la tabla correspondiente.
 
 ---
+
+# Apartado 9. Datos de prueba
+
+## 9.1. Editoriales
+
+| id | nombre | pais | telefono |
+|---:|---|---|---|
+| 1 | Cátedra | España | 910000101 |
+| 2 | Penguin Random House | España | 910000102 |
+| 3 | Planeta | España | 930000103 |
+| 4 | Salamandra | España | 930000104 |
+| 5 | Alianza Editorial | España | 910000105 |
+
+## 9.2. Autores
+
+| id | nombre | apellidos | nacionalidad | anio_nacimiento |
+|---:|---|---|---|---:|
+| 1 | Gabriel | García Márquez | Colombiana | 1927 |
+| 2 | Miguel de | Cervantes Saavedra | Española | 1547 |
+| 3 | Carlos Ruiz | Zafón | Española | 1964 |
+| 4 | Antoine | de Saint-Exupéry | Francesa | 1900 |
+| 5 | George | Orwell | Británica | 1903 |
+| 6 | Julio | Cortázar | Argentina | 1914 |
+| 7 | Jorge Luis | Borges | Argentina | 1899 |
+
+## 9.3. Libros
+
+| id | codigo_catalogo | titulo | anio_publicacion | num_paginas | editorial_id |
+|---:|---|---|---:|---:|---:|
+| 1 | LIB001 | Cien años de soledad | 1967 | 496 | 2 |
+| 2 | LIB002 | Don Quijote de la Mancha | 1605 | 1056 | 1 |
+| 3 | LIB003 | La sombra del viento | 2001 | 576 | 3 |
+| 4 | LIB004 | El principito | 1943 | 96 | 4 |
+| 5 | LIB005 | 1984 | 1949 | 328 | 5 |
+| 6 | LIB006 | Antología del cuento hispanoamericano | 2020 | 420 | 5 |
+
+## 9.4. Relación entre libros y autores
+
+| libro_id | autor_id | rol |
+|---:|---:|---|
+| 1 | 1 | PRINCIPAL |
+| 2 | 2 | PRINCIPAL |
+| 3 | 3 | PRINCIPAL |
+| 4 | 4 | PRINCIPAL |
+| 5 | 5 | PRINCIPAL |
+| 6 | 6 | PRINCIPAL |
+| 6 | 7 | COLABORADOR |
+
+## 9.5. Ejemplares
+
+| id | libro_id | codigo_barras | seccion | estado |
+|---:|---:|---|---|---|
+| 1 | 2 | BIB-0001 | Adultos | PRESTADO |
+| 2 | 2 | BIB-0002 | Adultos | DISPONIBLE |
+| 3 | 1 | BIB-0003 | Adultos | PRESTADO |
+| 4 | 1 | BIB-0004 | Adultos | DISPONIBLE |
+| 5 | 3 | BIB-0005 | Novela | PRESTADO |
+| 6 | 3 | BIB-0006 | Novela | DISPONIBLE |
+| 7 | 4 | BIB-0007 | Infantil | PRESTADO |
+| 8 | 4 | BIB-0008 | Infantil | DISPONIBLE |
+| 9 | 5 | BIB-0009 | Adultos | DISPONIBLE |
+| 10 | 5 | BIB-0010 | Adultos | DISPONIBLE |
+| 11 | 6 | BIB-0011 | Adultos | PRESTADO |
+| 12 | 6 | BIB-0012 | Adultos | DISPONIBLE |
+| 13 | 3 | BIB-0013 | Novela | DISPONIBLE |
+
+## 9.6. Lectores
+
+| id | nombre | apellidos | email | telefono | fecha_alta |
+|---:|---|---|---|---|---|
+| 1 | Elena | Ruiz | elena.ruiz@example.com | 600111222 | 2025-09-01 |
+| 2 | Andrés | Pérez | andres.perez@example.com | 600333444 | 2025-10-15 |
+| 3 | Marta | López | marta.lopez@example.com | 600555666 | 2026-01-12 |
+| 4 | Laura | Gómez | laura.gomez@example.com | 600777888 | 2026-03-20 |
+
+## 9.7. Empleados
+
+| dni | nombre | apellidos | puesto | email |
+|---|---|---|---|---|
+| 12345678A | Ana | Martín López | Bibliotecaria | ana.martin@example.com |
+| 87654321B | Carlos | Pérez Sanz | Auxiliar | carlos.perez@example.com |
+| 11223344C | Elena | Sanz Ruiz | Bibliotecaria | elena.sanz@example.com |
+
+## 9.8. Préstamos
+
+| id | fecha_prestamo | fecha_devolucion_prevista | lector_id | empleado_dni | estado |
+|---:|---|---|---:|---|---|
+| 1001 | 2026-10-01 | 2026-10-29 | 1 | 12345678A | ACTIVO |
+| 1002 | 2026-08-20 | 2026-09-17 | 2 | 87654321B | ACTIVO |
+| 1003 | 2026-09-01 | 2026-09-29 | 1 | 12345678A | DEVUELTO |
+| 1004 | 2026-10-08 | 2026-11-05 | 3 | 11223344C | ACTIVO |
+| 1005 | 2026-10-10 | 2026-11-07 | 4 | 12345678A | ACTIVO |
+| 1006 | 2026-10-09 | 2026-11-06 | 1 | 87654321B | ACTIVO |
+
+## 9.9. Detalle de préstamo
+
+| id | prestamo_id | ejemplar_id | fecha_devolucion_real |
+|---:|---:|---:|---|
+| 1 | 1001 | 1 | NULL |
+| 2 | 1002 | 3 | NULL |
+| 3 | 1003 | 13 | 2026-09-20 |
+| 4 | 1004 | 5 | NULL |
+| 5 | 1005 | 7 | NULL |
+| 6 | 1006 | 11 | NULL |
+
+## 9.10. Script de datos de prueba
+
+Ejecutar después del `schema.sql`:
+
+```sql
+USE biblioteca_aragon;
+
+INSERT INTO editorial (id, nombre, pais, telefono) VALUES
+(1, 'Cátedra', 'España', '910000101'),
+(2, 'Penguin Random House', 'España', '910000102'),
+(3, 'Planeta', 'España', '930000103'),
+(4, 'Salamandra', 'España', '930000104'),
+(5, 'Alianza Editorial', 'España', '910000105');
+
+INSERT INTO autor (id, nombre, apellidos, nacionalidad, anio_nacimiento) VALUES
+(1, 'Gabriel', 'García Márquez', 'Colombiana', 1927),
+(2, 'Miguel de', 'Cervantes Saavedra', 'Española', 1547),
+(3, 'Carlos Ruiz', 'Zafón', 'Española', 1964),
+(4, 'Antoine', 'de Saint-Exupéry', 'Francesa', 1900),
+(5, 'George', 'Orwell', 'Británica', 1903),
+(6, 'Julio', 'Cortázar', 'Argentina', 1914),
+(7, 'Jorge Luis', 'Borges', 'Argentina', 1899);
+
+INSERT INTO lector (id, nombre, apellidos, email, telefono, fecha_alta) VALUES
+(1, 'Elena', 'Ruiz', 'elena.ruiz@example.com', '600111222', '2025-09-01'),
+(2, 'Andrés', 'Pérez', 'andres.perez@example.com', '600333444', '2025-10-15'),
+(3, 'Marta', 'López', 'marta.lopez@example.com', '600555666', '2026-01-12'),
+(4, 'Laura', 'Gómez', 'laura.gomez@example.com', '600777888', '2026-03-20');
+
+INSERT INTO empleado (dni, nombre, apellidos, puesto, email) VALUES
+('12345678A', 'Ana', 'Martín López', 'Bibliotecaria', 'ana.martin@example.com'),
+('87654321B', 'Carlos', 'Pérez Sanz', 'Auxiliar', 'carlos.perez@example.com'),
+('11223344C', 'Elena', 'Sanz Ruiz', 'Bibliotecaria', 'elena.sanz@example.com');
+
+INSERT INTO libro (id, codigo_catalogo, titulo, anio_publicacion, num_paginas, editorial_id) VALUES
+(1, 'LIB001', 'Cien años de soledad', 1967, 496, 2),
+(2, 'LIB002', 'Don Quijote de la Mancha', 1605, 1056, 1),
+(3, 'LIB003', 'La sombra del viento', 2001, 576, 3),
+(4, 'LIB004', 'El principito', 1943, 96, 4),
+(5, 'LIB005', '1984', 1949, 328, 5),
+(6, 'LIB006', 'Antología del cuento hispanoamericano', 2020, 420, 5);
+
+INSERT INTO libro_autor (libro_id, autor_id, rol) VALUES
+(1, 1, 'PRINCIPAL'),
+(2, 2, 'PRINCIPAL'),
+(3, 3, 'PRINCIPAL'),
+(4, 4, 'PRINCIPAL'),
+(5, 5, 'PRINCIPAL'),
+(6, 6, 'PRINCIPAL'),
+(6, 7, 'COLABORADOR');
+
+INSERT INTO ejemplar (id, libro_id, codigo_barras, seccion, estado) VALUES
+(1, 2, 'BIB-0001', 'Adultos', 'PRESTADO'),
+(2, 2, 'BIB-0002', 'Adultos', 'DISPONIBLE'),
+(3, 1, 'BIB-0003', 'Adultos', 'PRESTADO'),
+(4, 1, 'BIB-0004', 'Adultos', 'DISPONIBLE'),
+(5, 3, 'BIB-0005', 'Novela', 'PRESTADO'),
+(6, 3, 'BIB-0006', 'Novela', 'DISPONIBLE'),
+(7, 4, 'BIB-0007', 'Infantil', 'PRESTADO'),
+(8, 4, 'BIB-0008', 'Infantil', 'DISPONIBLE'),
+(9, 5, 'BIB-0009', 'Adultos', 'DISPONIBLE'),
+(10, 5, 'BIB-0010', 'Adultos', 'DISPONIBLE'),
+(11, 6, 'BIB-0011', 'Adultos', 'PRESTADO'),
+(12, 6, 'BIB-0012', 'Adultos', 'DISPONIBLE'),
+(13, 3, 'BIB-0013', 'Novela', 'DISPONIBLE');
+
+INSERT INTO prestamo (id, fecha_prestamo, fecha_devolucion_prevista, lector_id, empleado_dni, estado) VALUES
+(1001, '2026-10-01', '2026-10-29', 1, '12345678A', 'ACTIVO'),
+(1002, '2026-08-20', '2026-09-17', 2, '87654321B', 'ACTIVO'),
+(1003, '2026-09-01', '2026-09-29', 1, '12345678A', 'DEVUELTO'),
+(1004, '2026-10-08', '2026-11-05', 3, '11223344C', 'ACTIVO'),
+(1005, '2026-10-10', '2026-11-07', 4, '12345678A', 'ACTIVO'),
+(1006, '2026-10-09', '2026-11-06', 1, '87654321B', 'ACTIVO');
+
+INSERT INTO detalle_prestamo (id, prestamo_id, ejemplar_id, fecha_devolucion_real) VALUES
+(1, 1001, 1, NULL),
+(2, 1002, 3, NULL),
+(3, 1003, 13, '2026-09-20'),
+(4, 1004, 5, NULL),
+(5, 1005, 7, NULL),
+(6, 1006, 11, NULL);
+```
+
+---
