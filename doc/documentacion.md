@@ -201,3 +201,19 @@ La base de datos debe ayudar a responder preguntas como estas:
 - ¿Qué libros se han prestado más veces?
 - ¿Qué empleado ha registrado más préstamos?
 - ¿Qué ejemplares corresponden a un préstamo determinado?
+
+## 10. Resumen del encargo
+
+El objetivo es diseñar una base de datos que permita gestionar el catálogo bibliográfico, las editoriales, los autores, los ejemplares físicos, los lectores, los empleados y los préstamos.
+
+La solución deberá identificar las entidades, definir sus relaciones, documentar las claves, crear el script SQL, insertar datos de prueba y comprobar el funcionamiento con consultas.
+
+---
+
+# Apartado 1. Resumen del caso
+
+La Biblioteca de Aragón, en Zaragoza, sirve como contexto para un caso académico de gestión bibliotecaria. El sistema propuesto centraliza la información de libros, autores, editoriales, ejemplares, lectores, empleados y préstamos.
+
+El catálogo describe cada obra y su editorial; la relación entre libros y autores permite registrar obras con varios autores; la tabla de ejemplares identifica cada copia física. Los préstamos relacionan a los lectores y empleados con los ejemplares que salen de la biblioteca.
+
+---
