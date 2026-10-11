@@ -816,3 +816,191 @@ INSERT INTO detalle_prestamo (id, prestamo_id, ejemplar_id, fecha_devolucion_rea
 ```
 
 ---
+
+# Apartado 10. Consultas de prueba
+
+Las siguientes consultas responden a las necesidades del caso. Los resultados esperados se calculan a partir de los datos de prueba anteriores. Las consultas de préstamos vencidos utilizan la fecha actual del sistema.
+
+## 10.1. ¿Qué libros hay en el catálogo y quién los publica?
+
+```sql
+SELECT l.codigo_catalogo, l.titulo, e.nombre AS editorial
+FROM libro l
+JOIN editorial e ON e.id = l.editorial_id
+ORDER BY l.titulo;
+```
+
+### Resultado esperado
+
+| codigo_catalogo | titulo | editorial |
+|---|---|---|
+| LIB005 | 1984 | Alianza Editorial |
+| LIB006 | Antología del cuento hispanoamericano | Alianza Editorial |
+| LIB001 | Cien años de soledad | Penguin Random House |
+| LIB002 | Don Quijote de la Mancha | Cátedra |
+| LIB004 | El principito | Salamandra |
+| LIB003 | La sombra del viento | Planeta |
+
+## 10.2. ¿Cuántos ejemplares hay de cada libro y cuántos están disponibles?
+
+```sql
+SELECT
+    l.titulo,
+    COUNT(e.id) AS ejemplares_totales,
+    SUM(CASE WHEN e.estado = 'DISPONIBLE' THEN 1 ELSE 0 END) AS disponibles,
+    SUM(CASE WHEN e.estado = 'PRESTADO' THEN 1 ELSE 0 END) AS prestados
+FROM libro l
+LEFT JOIN ejemplar e ON e.libro_id = l.id
+GROUP BY l.id, l.titulo
+ORDER BY l.titulo;
+```
+
+### Resultado esperado
+
+| titulo | ejemplares_totales | disponibles | prestados |
+|---|---:|---:|---:|
+| 1984 | 2 | 2 | 0 |
+| Antología del cuento hispanoamericano | 2 | 1 | 1 |
+| Cien años de soledad | 2 | 1 | 1 |
+| Don Quijote de la Mancha | 2 | 1 | 1 |
+| El principito | 2 | 1 | 1 |
+| La sombra del viento | 3 | 2 | 1 |
+
+## 10.3. ¿Qué préstamos siguen activos y qué libro tiene cada lector?
+
+```sql
+SELECT
+    p.id AS prestamo,
+    CONCAT(le.nombre, ' ', le.apellidos) AS lector,
+    l.titulo,
+    e.codigo_barras,
+    p.fecha_devolucion_prevista
+FROM prestamo p
+JOIN lector le ON le.id = p.lector_id
+JOIN detalle_prestamo dp ON dp.prestamo_id = p.id
+JOIN ejemplar e ON e.id = dp.ejemplar_id
+JOIN libro l ON l.id = e.libro_id
+WHERE p.estado = 'ACTIVO'
+ORDER BY p.id;
+```
+
+### Resultado esperado
+
+| prestamo | lector | titulo | codigo_barras | fecha_devolucion_prevista |
+|---:|---|---|---|---|
+| 1001 | Elena Ruiz | Don Quijote de la Mancha | BIB-0001 | 2026-10-29 |
+| 1002 | Andrés Pérez | Cien años de soledad | BIB-0003 | 2026-09-17 |
+| 1004 | Marta López | La sombra del viento | BIB-0005 | 2026-11-05 |
+| 1005 | Laura Gómez | El principito | BIB-0007 | 2026-11-07 |
+| 1006 | Elena Ruiz | Antología del cuento hispanoamericano | BIB-0011 | 2026-11-06 |
+
+## 10.4. ¿Qué préstamos están vencidos?
+
+```sql
+SELECT
+    p.id AS prestamo,
+    CONCAT(le.nombre, ' ', le.apellidos) AS lector,
+    p.fecha_devolucion_prevista
+FROM prestamo p
+JOIN lector le ON le.id = p.lector_id
+WHERE p.estado = 'ACTIVO'
+  AND p.fecha_devolucion_prevista < CURRENT_DATE()
+ORDER BY p.fecha_devolucion_prevista;
+```
+
+### Resultado esperado para el 11/10/2026
+
+| prestamo | lector | fecha_devolucion_prevista |
+|---:|---|---|
+| 1002 | Andrés Pérez | 2026-09-17 |
+
+## 10.5. ¿Qué libros se han prestado más veces?
+
+```sql
+SELECT
+    l.titulo,
+    COUNT(dp.id) AS veces_prestado
+FROM libro l
+LEFT JOIN ejemplar e ON e.libro_id = l.id
+LEFT JOIN detalle_prestamo dp ON dp.ejemplar_id = e.id
+GROUP BY l.id, l.titulo
+ORDER BY veces_prestado DESC, l.titulo;
+```
+
+### Resultado esperado
+
+| titulo | veces_prestado |
+|---|---:|
+| La sombra del viento | 2 |
+| Antología del cuento hispanoamericano | 1 |
+| Cien años de soledad | 1 |
+| Don Quijote de la Mancha | 1 |
+| El principito | 1 |
+| 1984 | 0 |
+
+## 10.6. ¿Qué lector tiene más préstamos registrados?
+
+```sql
+SELECT
+    le.id,
+    CONCAT(le.nombre, ' ', le.apellidos) AS lector,
+    COUNT(p.id) AS numero_prestamos
+FROM lector le
+JOIN prestamo p ON p.lector_id = le.id
+GROUP BY le.id, le.nombre, le.apellidos
+ORDER BY numero_prestamos DESC, lector
+LIMIT 1;
+```
+
+### Resultado esperado
+
+| id | lector | numero_prestamos |
+|---:|---|---:|
+| 1 | Elena Ruiz | 3 |
+
+## 10.7. ¿Qué empleado ha registrado más préstamos?
+
+```sql
+SELECT
+    em.dni,
+    CONCAT(em.nombre, ' ', em.apellidos) AS empleado,
+    COUNT(p.id) AS prestamos_registrados
+FROM empleado em
+JOIN prestamo p ON p.empleado_dni = em.dni
+GROUP BY em.dni, em.nombre, em.apellidos
+ORDER BY prestamos_registrados DESC, empleado
+LIMIT 1;
+```
+
+### Resultado esperado
+
+| dni | empleado | prestamos_registrados |
+|---|---|---:|
+| 12345678A | Ana Martín López | 3 |
+
+## 10.8. ¿Qué autores aparecen en cada libro y qué papel tienen?
+
+```sql
+SELECT
+    l.titulo,
+    CONCAT(a.nombre, ' ', a.apellidos) AS autor,
+    la.rol
+FROM libro l
+JOIN libro_autor la ON la.libro_id = l.id
+JOIN autor a ON a.id = la.autor_id
+ORDER BY l.titulo, la.rol, autor;
+```
+
+### Ejemplo de resultado
+
+| titulo | autor | rol |
+|---|---|---|
+| 1984 | George Orwell | PRINCIPAL |
+| Antología del cuento hispanoamericano | Jorge Luis Borges | COLABORADOR |
+| Antología del cuento hispanoamericano | Julio Cortázar | PRINCIPAL |
+| Cien años de soledad | Gabriel García Márquez | PRINCIPAL |
+| Don Quijote de la Mancha | Miguel de Cervantes Saavedra | PRINCIPAL |
+| El principito | Antoine de Saint-Exupéry | PRINCIPAL |
+| La sombra del viento | Carlos Ruiz Zafón | PRINCIPAL |
+
+---
