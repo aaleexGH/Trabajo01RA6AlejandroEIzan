@@ -36,3 +36,31 @@ La **Biblioteca de Aragón, en Zaragoza**, sirve como contexto institucional par
 
 La gestión necesita conocer qué libros forman parte del catálogo, cuántos ejemplares existen de cada título, dónde están ubicados y cuáles se encuentran prestados, disponibles o en reparación.
 
+## 2. Los libros y las editoriales
+
+La biblioteca dispone de un catálogo de libros. De cada libro se guarda un identificador interno, el código de catálogo, el título, el año de publicación, el número de páginas y la editorial que publicó la edición.
+
+Cada libro se asocia a una sola editorial. Una editorial puede publicar muchos libros.
+
+### Ejemplo de libros
+
+| **ID** | **Código** | **Título** | **Año** | **Páginas** | **Editorial** |
+|---:|---|---|---:|---:|---|
+| 1 | LIB001 | Cien años de soledad | 1967 | 496 | Penguin Random House |
+| 2 | LIB002 | Don Quijote de la Mancha | 1605 | 1056 | Cátedra |
+| 3 | LIB003 | La sombra del viento | 2001 | 576 | Planeta |
+| 4 | LIB004 | El principito | 1943 | 96 | Salamandra |
+| 5 | LIB005 | 1984 | 1949 | 328 | Alianza Editorial |
+| 6 | LIB006 | Antología del cuento hispanoamericano | 2020 | 420 | Alianza Editorial |
+
+### Ejemplo de editoriales
+
+| **ID** | **Nombre** | **País** | **Teléfono** |
+|---:|---|---|---|
+| 1 | Cátedra | España | 910000101 |
+| 2 | Penguin Random House | España | 910000102 |
+| 3 | Planeta | España | 930000103 |
+| 4 | Salamandra | España | 930000104 |
+| 5 | Alianza Editorial | España | 910000105 |
+
+Los nombres se emplean como datos de prueba; las filas no pretenden describir las existencias reales de la biblioteca.
