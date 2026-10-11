@@ -386,3 +386,99 @@ La clave primaria está formada por la combinación de `libro_id` y `autor_id`.
 | `fecha_devolucion_real` | | |
 
 ---
+
+# Apartado 6. Script SQL ejecutable
+
+El siguiente script crea la base de datos y sus nueve tablas. Está pensado para MySQL 8.0 o posterior.
+
+```sql
+CREATE DATABASE IF NOT EXISTS biblioteca_aragon
+    CHARACTER SET utf8mb4
+    COLLATE utf8mb4_unicode_ci;
+
+CREATE TABLE editorial (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(120) NOT NULL UNIQUE,
+    pais VARCHAR(80) NOT NULL,
+    telefono VARCHAR(25)
+);
+
+CREATE TABLE autor (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(60) NOT NULL,
+    apellidos VARCHAR(100) NOT NULL,
+    nacionalidad VARCHAR(60),
+    anio_nacimiento SMALLINT
+);
+
+CREATE TABLE lector (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(60) NOT NULL,
+    apellidos VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    telefono VARCHAR(20),
+    fecha_alta DATE NOT NULL
+);
+
+CREATE TABLE empleado (
+    dni VARCHAR(12) PRIMARY KEY,
+    nombre VARCHAR(60) NOT NULL,
+    apellidos VARCHAR(100) NOT NULL,
+    puesto VARCHAR(60) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE
+);
+
+CREATE TABLE libro (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    codigo_catalogo VARCHAR(20) NOT NULL UNIQUE,
+    titulo VARCHAR(180) NOT NULL,
+    anio_publicacion SMALLINT,
+    num_paginas INT,
+    editorial_id INT NOT NULL,
+    CONSTRAINT fk_libro_editorial
+        FOREIGN KEY (editorial_id) REFERENCES editorial(id),
+    CHECK (num_paginas IS NULL OR num_paginas > 0)
+);
+
+CREATE TABLE libro_autor (
+    libro_id INT NOT NULL,
+    autor_id INT NOT NULL,
+    rol ENUM('PRINCIPAL', 'COLABORADOR') NOT NULL DEFAULT 'PRINCIPAL',
+    PRIMARY KEY (libro_id, autor_id),
+    FOREIGN KEY (libro_id) REFERENCES libro(id),
+    FOREIGN KEY (autor_id) REFERENCES autor(id)
+);
+
+CREATE TABLE ejemplar (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    libro_id INT NOT NULL,
+    codigo_barras VARCHAR(30) NOT NULL UNIQUE,
+    seccion VARCHAR(60) NOT NULL,
+    estado ENUM('DISPONIBLE', 'PRESTADO', 'REPARACION', 'PERDIDO') NOT NULL DEFAULT 'DISPONIBLE',
+    FOREIGN KEY (libro_id) REFERENCES libro(id)
+);
+
+CREATE TABLE prestamo (
+    id INT PRIMARY KEY,
+    fecha_prestamo DATE NOT NULL,
+    fecha_devolucion_prevista DATE NOT NULL,
+    lector_id INT NOT NULL,
+    empleado_dni VARCHAR(12) NOT NULL,
+    estado ENUM('ACTIVO', 'DEVUELTO', 'CANCELADO') NOT NULL DEFAULT 'ACTIVO',
+    FOREIGN KEY (lector_id) REFERENCES lector(id),
+    FOREIGN KEY (empleado_dni) REFERENCES empleado(dni),
+    CHECK (fecha_devolucion_prevista >= fecha_prestamo)
+);
+
+CREATE TABLE detalle_prestamo (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    prestamo_id INT NOT NULL,
+    ejemplar_id INT NOT NULL,
+    fecha_devolucion_real DATE NULL,
+    FOREIGN KEY (prestamo_id) REFERENCES prestamo(id),
+    FOREIGN KEY (ejemplar_id) REFERENCES ejemplar(id),
+    UNIQUE (prestamo_id, ejemplar_id)
+);
+```
+
+---
