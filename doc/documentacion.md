@@ -64,3 +64,23 @@ Cada libro se asocia a una sola editorial. Una editorial puede publicar muchos l
 | 5 | Alianza Editorial | España | 910000105 |
 
 Los nombres se emplean como datos de prueba; las filas no pretenden describir las existencias reales de la biblioteca.
+
+## 3. Los autores
+
+Un libro puede tener uno o varios autores y un autor puede participar en diferentes libros. Por eso, la relación entre libros y autores puede ser de muchos a muchos.
+
+De cada autor se guarda un identificador, su nombre, apellidos, nacionalidad y año de nacimiento. Además, se quiere distinguir si participa como autor principal o colaborador en cada libro.
+
+### Ejemplo de autores
+
+| **ID** | **Nombre** | **Apellidos** | **Nacionalidad** | **Año de nacimiento** |
+|---:|---|---|---|---:|
+| 1 | Gabriel | García Márquez | Colombiana | 1927 |
+| 2 | Miguel de | Cervantes Saavedra | Española | 1547 |
+| 3 | Carlos Ruiz | Zafón | Española | 1964 |
+| 4 | Antoine | de Saint-Exupéry | Francesa | 1900 |
+| 5 | George | Orwell | Británica | 1903 |
+| 6 | Julio | Cortázar | Argentina | 1914 |
+| 7 | Jorge Luis | Borges | Argentina | 1899 |
+
+La relación libro-autor guardará también el papel del autor en esa obra.
