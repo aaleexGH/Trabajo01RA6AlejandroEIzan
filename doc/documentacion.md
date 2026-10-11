@@ -84,3 +84,32 @@ De cada autor se guarda un identificador, su nombre, apellidos, nacionalidad y a
 | 7 | Jorge Luis | Borges | Argentina | 1899 |
 
 La relación libro-autor guardará también el papel del autor en esa obra.
+
+## 4. Los ejemplares y el inventario
+
+La biblioteca no presta únicamente títulos abstractos: presta ejemplares físicos concretos. Cada ejemplar tiene un código de barras propio y está asociado a un libro del catálogo.
+
+De cada ejemplar se guarda:
+
+- Un identificador.
+- El libro al que corresponde.
+- El código de barras.
+- La sección o ubicación.
+- El estado actual.
+
+Los estados utilizados en este modelo son `DISPONIBLE`, `PRESTADO`, `REPARACION` y `PERDIDO`.
+
+### Ejemplo de ejemplares
+
+| **ID** | **Código de barras** | **Libro** | **Sección** | **Estado** |
+|---:|---|---|---|---|
+| 1 | BIB-0001 | Don Quijote de la Mancha | Adultos | PRESTADO |
+| 2 | BIB-0002 | Don Quijote de la Mancha | Adultos | DISPONIBLE |
+| 3 | BIB-0003 | Cien años de soledad | Adultos | PRESTADO |
+| 4 | BIB-0004 | Cien años de soledad | Adultos | DISPONIBLE |
+| 5 | BIB-0005 | La sombra del viento | Novela | PRESTADO |
+| 6 | BIB-0006 | La sombra del viento | Novela | DISPONIBLE |
+| 7 | BIB-0007 | El principito | Infantil | PRESTADO |
+| 8 | BIB-0008 | El principito | Infantil | DISPONIBLE |
+
+Un libro puede tener varios ejemplares. El número de ejemplares disponibles se obtiene contando los ejemplares cuyo estado sea `DISPONIBLE`.
