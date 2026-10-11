@@ -142,3 +142,31 @@ De cada empleado se guarda el DNI, nombre, apellidos, puesto y correo electróni
 | 11223344C | Elena | Sanz Ruiz | Bibliotecaria | elena.sanz@example.com |
 
 Un empleado puede registrar muchos préstamos y cada préstamo queda asociado a un único empleado.
+
+## 7. Los préstamos
+
+Cada operación de préstamo registra cuándo sale el material, cuándo está previsto devolverlo, qué lector se lo lleva y qué empleado registra la operación.
+
+De cada préstamo se guarda:
+
+- Un identificador.
+- La fecha del préstamo.
+- La fecha prevista de devolución.
+- El lector.
+- El empleado responsable del registro.
+- El estado del préstamo.
+
+Los estados del modelo son `ACTIVO`, `DEVUELTO` y `CANCELADO`. La duración de los préstamos que aparece en los ejemplos es ficticia y no representa una condición oficial de la biblioteca.
+
+### Ejemplo de préstamos
+
+| **Préstamo** | **Fecha** | **Devolución prevista** | **Lector** | **Empleado** | **Estado** |
+|---:|---|---|---|---|---|
+| 1001 | 2026-10-01 | 2026-10-29 | Elena Ruiz | Ana Martín López | ACTIVO |
+| 1002 | 2026-08-20 | 2026-09-17 | Andrés Pérez | Carlos Pérez Sanz | ACTIVO |
+| 1003 | 2026-09-01 | 2026-09-29 | Elena Ruiz | Ana Martín López | DEVUELTO |
+| 1004 | 2026-10-08 | 2026-11-05 | Marta López | Elena Sanz Ruiz | ACTIVO |
+| 1005 | 2026-10-10 | 2026-11-07 | Laura Gómez | Ana Martín López | ACTIVO |
+| 1006 | 2026-10-09 | 2026-11-06 | Elena Ruiz | Carlos Pérez Sanz | ACTIVO |
+
+Un préstamo puede contener varios ejemplares, por lo que se necesita un detalle de préstamo.
