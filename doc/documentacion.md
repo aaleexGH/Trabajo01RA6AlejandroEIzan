@@ -217,3 +217,33 @@ La Biblioteca de Aragón, en Zaragoza, sirve como contexto para un caso académi
 El catálogo describe cada obra y su editorial; la relación entre libros y autores permite registrar obras con varios autores; la tabla de ejemplares identifica cada copia física. Los préstamos relacionan a los lectores y empleados con los ejemplares que salen de la biblioteca.
 
 ---
+
+# Apartado 2. Análisis del caso
+
+## 2.1. Entidades y atributos
+
+| Entidad | Atributos principales | Referencia |
+|---|---|---|
+| `editorial` | id, nombre, pais, telefono | §2 |
+| `libro` | id, codigo_catalogo, titulo, anio_publicacion, num_paginas, editorial_id | §2 |
+| `autor` | id, nombre, apellidos, nacionalidad, anio_nacimiento | §3 |
+| `libro_autor` | libro_id, autor_id, rol | §3 |
+| `ejemplar` | id, libro_id, codigo_barras, seccion, estado | §4 |
+| `lector` | id, nombre, apellidos, email, telefono, fecha_alta | §5 |
+| `empleado` | dni, nombre, apellidos, puesto, email | §6 |
+| `prestamo` | id, fecha_prestamo, fecha_devolucion_prevista, lector_id, empleado_dni, estado | §7 |
+| `detalle_prestamo` | id, prestamo_id, ejemplar_id, fecha_devolucion_real | §8 |
+
+## 2.2. Relaciones
+
+| Relación | Cardinalidad | Razonamiento |
+|---|---|---|
+| `editorial` - `libro` | 1:N | Una editorial puede publicar muchos libros; cada libro de este modelo tiene una editorial. |
+| `libro` - `autor` | N:M | Un libro puede tener varios autores y un autor puede participar en muchos libros. Se resuelve mediante `libro_autor`. |
+| `libro` - `ejemplar` | 1:N | Un título puede tener varias copias físicas; cada ejemplar corresponde a un libro. |
+| `lector` - `prestamo` | 1:N | Un lector puede tener muchos préstamos; cada préstamo corresponde a un lector. |
+| `empleado` - `prestamo` | 1:N | Un empleado puede registrar muchos préstamos; cada préstamo se registra por un empleado. |
+| `prestamo` - `detalle_prestamo` | 1:N | Un préstamo puede incluir varios ejemplares. |
+| `ejemplar` - `detalle_prestamo` | 1:N a lo largo del tiempo | Un ejemplar puede aparecer en distintos préstamos históricos, pero no debe tener dos préstamos activos a la vez. |
+
+---
