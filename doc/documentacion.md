@@ -113,3 +113,32 @@ Los estados utilizados en este modelo son `DISPONIBLE`, `PRESTADO`, `REPARACION`
 | 8 | BIB-0008 | El principito | Infantil | DISPONIBLE |
 
 Un libro puede tener varios ejemplares. El número de ejemplares disponibles se obtiene contando los ejemplares cuyo estado sea `DISPONIBLE`.
+
+## 5. Los lectores
+
+Los lectores registrados pueden llevarse ejemplares en préstamo. De cada lector se guarda un identificador, nombre, apellidos, correo electrónico, teléfono y fecha de alta.
+
+### Ejemplo de lectores
+
+| **ID** | **Nombre** | **Apellidos** | **Correo** | **Teléfono** | **Fecha de alta** |
+|---:|---|---|---|---|---|
+| 1 | Elena | Ruiz | elena.ruiz@example.com | 600111222 | 2025-09-01 |
+| 2 | Andrés | Pérez | andres.perez@example.com | 600333444 | 2025-10-15 |
+| 3 | Marta | López | marta.lopez@example.com | 600555666 | 2026-01-12 |
+| 4 | Laura | Gómez | laura.gomez@example.com | 600777888 | 2026-03-20 |
+
+## 6. El personal
+
+El personal registra las operaciones de préstamo y ayuda a mantener la información actualizada.
+
+De cada empleado se guarda el DNI, nombre, apellidos, puesto y correo electrónico.
+
+### Ejemplo de empleados
+
+| **DNI** | **Nombre** | **Apellidos** | **Puesto** | **Correo** |
+|---|---|---|---|---|
+| 12345678A | Ana | Martín López | Bibliotecaria | ana.martin@example.com |
+| 87654321B | Carlos | Pérez Sanz | Auxiliar | carlos.perez@example.com |
+| 11223344C | Elena | Sanz Ruiz | Bibliotecaria | elena.sanz@example.com |
+
+Un empleado puede registrar muchos préstamos y cada préstamo queda asociado a un único empleado.
