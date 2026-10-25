@@ -3,7 +3,7 @@
 **Módulo**: Desarrollo de Interfaces  
 **Autores**: Alejandro e Izan  
 **Versión**: 1.0.0  
-**Manual completo de despliegue**: [docs/manual_despliegue.pdf](docs/manual_despliegue.pdf)
+**Manual completo de despliegue**: [docs/manual_despliegue.pdf](doc/manual_despliegue.pdf)
 
 ---
 
